@@ -10,6 +10,7 @@ local lspconfig = require "lspconfig"
 lspconfig.servers = {
     "lua_ls",
     "clangd",
+    "neocmake",
 }
 
 -- list of servers configured with default config.

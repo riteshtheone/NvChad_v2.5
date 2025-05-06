@@ -3,14 +3,14 @@ return {
 		"nvim-treesitter/nvim-treesitter",
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
-			require "configs.treesitter"
+			require("configs.treesitter")
 		end,
 	},
 
 	{
 		"stevearc/conform.nvim",
 		-- event = 'BufWritePre', -- uncomment for format on save
-		opts = require "configs.conform",
+		opts = require("configs.conform"),
 	},
 
 	{
@@ -18,13 +18,13 @@ return {
 		event = "VeryLazy",
 		dependencies = { "conform.nvim" },
 		config = function()
-			require "configs.mason-conform"
+			require("configs.mason-conform")
 		end,
 	},
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
-			require "configs.lspconfig"
+			require("configs.lspconfig")
 		end,
 	},
 
@@ -33,7 +33,7 @@ return {
 		event = "VeryLazy",
 		dependencies = { "nvim-lspconfig" },
 		config = function()
-			require "configs.mason-lspconfig"
+			require("configs.mason-lspconfig")
 		end,
 	},
 
@@ -41,7 +41,7 @@ return {
 		"mfussenegger/nvim-lint",
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
-			require "configs.lint"
+			require("configs.lint")
 		end,
 	},
 
@@ -50,16 +50,39 @@ return {
 		event = "VeryLazy",
 		dependencies = { "nvim-lint" },
 		config = function()
-			require "configs.mason-lint"
+			require("configs.mason-lint")
 		end,
 	},
 
-	{
-		"akinsho/toggleterm.nvim",
+
+    {
+        'akinsho/toggleterm.nvim',
 		event = "VeryLazy",
-		version = "*",
-		config = function()
-            require "configs.toggleterm"
-        end,
+        version = "*",
+        config = true
+    },
+
+	{
+		"Civitasv/cmake-tools.nvim",
+		lazy = true,
+		init = function()
+			local loaded = false
+			local function check()
+				local cwd = vim.uv.cwd()
+				if vim.fn.filereadable(cwd .. "/CMakeLists.txt") == 1 then
+					require("lazy").load({ plugins = { "cmake-tools.nvim" } })
+					loaded = true
+				end
+			end
+			check()
+			vim.api.nvim_create_autocmd("DirChanged", {
+				callback = function()
+					if not loaded then
+						check()
+					end
+				end,
+			})
+		end,
+		opts = {},
 	},
 }
