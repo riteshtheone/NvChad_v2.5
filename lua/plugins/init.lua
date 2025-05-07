@@ -9,7 +9,7 @@ return {
 
 	{
 		"stevearc/conform.nvim",
-		-- event = 'BufWritePre', -- uncomment for format on save
+		-- event = "BufWritePre", -- uncomment for format on save
 		opts = require("configs.conform"),
 	},
 
@@ -54,13 +54,16 @@ return {
 		end,
 	},
 
-
-    {
-        'akinsho/toggleterm.nvim',
+	{
+		"akinsho/toggleterm.nvim",
 		event = "VeryLazy",
-        version = "*",
-        config = true
-    },
+		version = "*",
+		config = true,
+	},
+
+	{
+		"nvim-lua/plenary.nvim",
+	},
 
 	{
 		"Civitasv/cmake-tools.nvim",
@@ -83,6 +86,9 @@ return {
 				end,
 			})
 		end,
-		opts = {},
+		opts = {
+			auto_build = false,
+			auto_reload = false,
+		},
 	},
 }

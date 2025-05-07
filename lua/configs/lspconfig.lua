@@ -14,7 +14,7 @@ lspconfig.servers = {
 }
 
 -- list of servers configured with default config.
-local servers = { "clangd" }
+local servers = { "clangd", "neocmake" }
 
 -- lsps with default config
 for _, lsp in ipairs(servers) do
