@@ -1,6 +1,35 @@
-require("nvchad.configs.lspconfig").defaults()
+local on_attach = require("nvchad.configs.lspconfig").on_attach
+local on_init = require("nvchad.configs.lspconfig").on_init
+local capabilities = require("nvchad.configs.lspconfig").capabilities
 
-local servers = { "html", "cssls", "clangd", "pyright" }
-vim.lsp.enable(servers)
+local lspconfig = require "lspconfig"
 
--- read :h vim.lsp.config for changing options of lsp servers 
+-- list of all servers configured.
+lspconfig.servers = {
+    "lua_ls",
+    "clangd",
+    -- "pyright",
+}
+
+-- list of servers configured with default config.
+local default_servers = {}
+
+-- lsps with default config
+for _, lsp in ipairs(default_servers) do
+    lspconfig[lsp].setup {
+        on_attach = on_attach,
+        on_init = on_init,
+        capabilities = capabilities,
+    }
+end
+
+lspconfig.clangd.setup {
+    on_attach = function(client, bufnr)
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentRangeFormattingProvider = false
+        on_attach(client, bufnr)
+    end,
+    on_init = on_init,
+    capabilities = capabilities,
+}
+
