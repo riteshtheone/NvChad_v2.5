@@ -2,6 +2,8 @@ require "nvchad.options"
 
 local o = vim.o
 
+o.modeline = false
+
 -- Indenting
 o.shiftwidth = 4
 o.tabstop = 4
