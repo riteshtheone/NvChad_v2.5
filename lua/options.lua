@@ -2,7 +2,7 @@ require "nvchad.options"
 
 local o = vim.o
 
-o.modeline = false
+-- o.modeline = false
 
 -- Indenting
 o.shiftwidth = 4
